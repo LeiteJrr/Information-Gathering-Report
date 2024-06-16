@@ -6,7 +6,7 @@ import socket
 
 
 def tcp_connect_scan(target, ports):
-
+    
 
     results = {}
 

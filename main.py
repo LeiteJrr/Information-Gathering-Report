@@ -39,8 +39,8 @@ with open(filename, 'w') as f: # write data to file
 
     if subdomain_scan_report:
         f.write("\nSubdomains:\n")
-        f.write(subdomain_scan_report["message"] + "\n")  # Write scan message
-        if "subdomains" in subdomain_scan_report:  # Check if subdomains exist
+        f.write(subdomain_scan_report["message"] + "\n") 
+        if "subdomains" in subdomain_scan_report:
             for subdomain in subdomain_scan_report["subdomains"]:
                 f.write(f"{subdomain}\n")
         else:
