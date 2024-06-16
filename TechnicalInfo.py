@@ -15,6 +15,57 @@ def check_ip_and_domain(target):
         return "Invalid target", None
 
 # gets DNS record for target site
+!pip install dnspython
+
+import socket
+import dns.resolver
+
+def get_ip(domain):
+    try:
+        return socket.gethostbyname(domain)
+    except socket.gaierror:
+        return None
+
+def get_dns_servers(domain):
+    try:
+        answers = dns.resolver.resolve(domain, 'NS')
+        return [str(rdata) for rdata in answers]
+    except dns.resolver.NXDOMAIN:
+        return None
+
+# URL to pull DNS servers from
+url = "https://webscraper.io/test-sites"
+domain = url.split("//")[1].split("/")[0]
+
+print(f"Gathering information for: {domain}")
+
+# Get IP address
+ip = get_ip(domain)
+if ip:
+    print(f"IP Address: {ip}")
+else:
+    print("IP Address: Not found")
+
+# Get DNS servers
+dns_servers = get_dns_servers(domain)
+if dns_servers:
+    print("DNS Servers:")
+    for server in dns_servers:
+        print(f" - {server}")
+else:
+    print("DNS Servers: Not found")
+Collecting dnspython
+  Downloading dnspython-2.6.1-py3-none-any.whl (307 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 307.7/307.7 kB 2.2 MB/s eta 0:00:00
+Installing collected packages: dnspython
+Successfully installed dnspython-2.6.1
+Gathering information for: webscraper.io
+IP Address: 18.172.134.35
+DNS Servers:
+ - ns-1178.awsdns-19.org.
+ - ns-1975.awsdns-54.co.uk.
+ - ns-43.awsdns-05.com.
+ - ns-799.awsdns-35.net.
 def get_dns_records(domain): #### not sure if it is working correctly #####
     records = {}
     try:
